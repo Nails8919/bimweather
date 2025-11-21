@@ -17,7 +17,7 @@ function App() {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null)
 
   const getweatherData = async (loc: Location) => {
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${loc.lat}&lon=${loc.lon}&appid=${APIKey}`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${loc.lat}&lon=${loc.lon}&appid=${APIKey}&units=metric`)
       .then(response => response.json())
       .then(data => {
         setWeatherData(data)
@@ -35,6 +35,8 @@ function App() {
       </p>
       <p className="text-lg mt-4">Your personalized weather dashboard</p>
       <div> Temperature: {weatherData ? weatherData.main.temp : "Loading..."}&deg;C</div>
+      <div> Feels Like: {weatherData ? weatherData.main.feels_like : "Loading..."}&deg;C</div>
+      <div> Humidity: {weatherData ? weatherData.main.humidity : "Loading..."}%</div>
     </div>
   )
 }
