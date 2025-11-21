@@ -47,6 +47,14 @@ function App() {
     //.catch(err => console.error(err))
   }
 
+  // Function to capitalize words
+  const capWord = (word: string) => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }
+  const capWords = (phrase: string) => {
+    return phrase.split(' ').map(word => capWord(word)).join(' ');
+  }
+
   // Fetch weather data on component mount
   useEffect(() => {
     getweatherData({ lat: 13.1667, lon: -59.5333 }) // Coordinates for Bridgetown, Barbados
@@ -75,7 +83,7 @@ function App() {
               <div className="flex flex items-baseline justify-center gap-4 mt-6 ">
                 <div className="font-semibold"> Sea Level: <p>{weatherData.main.sea_level} hPa</p></div>
                 <div className="font-semibold"> Ground Level: <p>{weatherData.main.grnd_level} hPa</p></div>
-                <div className="font-semibold text-center"> Current Weather Description: <p>{weatherData.weather[0].description} {<img src={`https://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`} alt="Weather icon" className="block flex justify-center mx-auto" />}</p></div>
+                <div className="font-semibold text-center"> Current Weather: <p>{capWords(weatherData.weather[0].description)} {<img src={`https://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`} alt="Weather icon" className="block flex justify-center mx-auto" />}</p></div>
                 <div className="font-semibold"> Wind Speed: <p>{weatherData.wind.speed} m/s
                   {weatherData.wind.gust != null && ` with gusts up to ${weatherData.wind.gust} m/s`} in a {cardinalFromDegree(weatherData.wind.deg, CardinalSubset.Intercardinal)} direction
                 </p></div>
