@@ -1,11 +1,14 @@
+//Libraries imports
 import { useEffect, useState } from "react"
 import { APIKey } from "./config.js"
 
 function App() {
+  // Defining interface for location
   interface Location {
     lat: number,
     lon: number
   }
+  // Defining interface for weather data
   interface WeatherData {
     main: {
       temp: number,
@@ -19,8 +22,10 @@ function App() {
     }
   }
 
+  // State variable to hold weather data
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null)
 
+  // Function to fetch weather data from OpenWeatherMap API
   const getweatherData = async (loc: Location) => {
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${loc.lat}&lon=${loc.lon}&appid=${APIKey}&units=metric`)
       .then(response => response.json())
@@ -29,10 +34,12 @@ function App() {
       })
       .catch(err => console.error(err))
   }
+  // Fetch weather data on component mount
   useEffect(() => {
     getweatherData({ lat: 13.1667, lon: -59.5333 })
   }, [])
 
+  // Render the weather dashboard UI
   return (
     <div className="flex flex-col items-center min-h-screen bg-blue-200">
       <p className="text-5xl mt-6">
